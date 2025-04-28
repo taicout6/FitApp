@@ -10,4 +10,19 @@ app.get('/', async (_req, res) => {
   return res.status(200).json(clients);
 });
 
+app.post('/', async (req, res) => {
+  const data = [
+    req.body.name,
+    req.body.email,
+    req.body.phone,
+    req.body.address,
+    req.body.plan,
+    req.body.goal
+  ];
+
+  await clientsModel.addClient(data);
+
+  return res.status(200).json("Cliente registrado com sucesso");
+});
+
 module.exports = app;
