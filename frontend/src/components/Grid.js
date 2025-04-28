@@ -1,8 +1,8 @@
 // import React from "react";
 // import axios from "axios";
 import styled from "styled-components";
-// import { FaTrash, FaEdit } from "react-icons/fa";
-// import { toast } from "react-toastify";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Table = styled.table`
   width: 100%;
@@ -59,11 +59,17 @@ const Grid = ({ clients }) => {
         {clients.map((item, i) => (
           <Tr key={i}>
             <Td>{item.name}</Td>
-            <Td>{item.email}</Td>
+            <Td onlyWeb>{item.email}</Td>
             <Td>{item.phone}</Td>
-            <Td>{item.address}</Td>
-            <Td>{item.plan}</Td>
-            <Td>{item.goal}</Td>
+            <Td onlyWeb>{item.address}</Td>
+            <Td onlyWeb>{item.plan}</Td>
+            <Td onlyWeb>{item.goal}</Td>
+            <Td alignCenter width="5%">
+              <FaEdit />
+            </Td>
+            <Td alignCenter width="5%">
+              <FaTrash />
+            </Td>
           </Tr>
         ))}
       </Tbody>
