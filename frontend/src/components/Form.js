@@ -1,5 +1,5 @@
 // import axios from "axios";
-// import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 // import { toast } from "react-toastify";
 
@@ -39,10 +39,11 @@ const Button = styled.button`
   height: 42px;
 `;
 
-const Form = () => {
+const Form = ({ onEdit }) => {
+  const ref = useRef();
 
   return (
-    <FormContainer >
+    <FormContainer ref={ref}>
       <InputArea>
         <Label>Nome</Label>
         <Input name="nome" />

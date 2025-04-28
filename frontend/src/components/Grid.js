@@ -41,21 +41,31 @@ export const Td = styled.td`
   }
 `;
 
-const Grid = () => {
+const Grid = ({ clients }) => {
 
   return (
     <Table>
       <Thead>
         <Tr>
           <Th>Nome</Th>
-          <Th>Email</Th>
-          <Th onlyWeb>Fone</Th>
-          <Th>Endereço</Th>
-          <Th>Plano</Th>
-          <Th>Objetivo</Th>
+          <Th onlyWeb>Email</Th>
+          <Th>Fone</Th>
+          <Th onlyWeb>Endereço</Th>
+          <Th onlyWeb>Plano</Th>
+          <Th onlyWeb>Objetivo</Th>
         </Tr>
       </Thead>
       <Tbody>
+        {clients.map((item, i) => (
+          <Tr key={i}>
+            <Td>{item.name}</Td>
+            <Td>{item.email}</Td>
+            <Td>{item.phone}</Td>
+            <Td>{item.address}</Td>
+            <Td>{item.plan}</Td>
+            <Td>{item.goal}</Td>
+          </Tr>
+        ))}
       </Tbody>
     </Table>
   );
