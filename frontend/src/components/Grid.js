@@ -1,5 +1,5 @@
-// import React from "react";
-// import axios from "axios";
+import React from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -41,7 +41,21 @@ export const Td = styled.td`
   }
 `;
 
-const Grid = ({ clients }) => {
+const Grid = ({ clients, setClients, setOnEdit }) => {
+  const handleEdit = async (item) => {
+    setOnEdit(item);
+  };
+
+  const handleDelete = async (id) => {
+    await axios.delete("http://localhost:3001/" + id)
+    .then(({ data }) => {
+      const newArray = clients.filter((clients) => clients.id !== id);
+      setClients(newArray);
+      toast.success(data);
+    }).catch(({ data }) => toast.error(data));
+
+    setOnEdit(null);
+  };
 
   return (
     <Table>
@@ -65,10 +79,10 @@ const Grid = ({ clients }) => {
             <Td onlyWeb>{item.plan}</Td>
             <Td onlyWeb>{item.goal}</Td>
             <Td alignCenter width="5%">
-              <FaEdit />
+              <FaEdit onClick={() => handleEdit(item)} />
             </Td>
             <Td alignCenter width="5%">
-              <FaTrash />
+              <FaTrash onClick={() => handleDelete(item.id)}/>
             </Td>
           </Tr>
         ))}

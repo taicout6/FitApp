@@ -1,7 +1,7 @@
-// import axios from "axios";
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const FormContainer = styled.form`
   display: flex;
@@ -39,14 +39,74 @@ const Button = styled.button`
   height: 42px;
 `;
 
-const Form = ({ onEdit }) => {
+const Form = ({ onEdit, setOnEdit, getClients }) => {
   const ref = useRef();
 
+  useEffect(() => {
+    if (onEdit) {
+      const client = ref.current;
+
+      client.name.value = onEdit.name;
+      client.email.value = onEdit.email;
+      client.phone.value = onEdit.phone;
+      client.address.value = onEdit.address;
+      client.plan.value = onEdit.plan;
+      client.goal.value = onEdit.goal;
+    }
+  }, [onEdit]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const client = ref.current;
+
+    if (
+      !client.name.value ||
+      !client.email.value ||
+      !client.phone.value ||
+      !client.address.value ||
+      !client.plan.value ||
+      !client.goal.value
+    ) {
+      return toast.warn("Preencha todos os campos!");
+    }
+
+    if (onEdit) {
+      await axios.put("http://localhost:3001/" + onEdit.id, {
+        name: client.name.value,
+        email: client.email.value,
+        phone: client.phone.value,
+        address: client.address.value,
+        plan: client.plan.value,
+        goal: client.goal.value
+      }).then(({ data }) => toast.success(data)).catch(({ data }) => toast.error(data));
+    } else {
+      await axios.post("http://localhost:3001", {
+        name: client.name.value,
+        email: client.email.value,
+        phone: client.phone.value,
+        address: client.address.value,
+        plan: client.plan.value,
+        goal: client.goal.value
+      }).then(({ data }) => toast.success(data)).catch(({ data }) => toast.error(data));
+    }
+
+    client.name.value = "";
+    client.email.value = "";
+    client.phone.value = "";
+    client.address.value = "";
+    client.plan.value = "";
+    client.goal.value = "";
+
+    setOnEdit(null);
+    getClients();
+  };
+
   return (
-    <FormContainer ref={ref}>
+    <FormContainer ref={ref} onSubmit={handleSubmit}>
       <InputArea>
         <Label>Nome</Label>
-        <Input name="nome" />
+        <Input name="name" />
       </InputArea>
       <InputArea>
         <Label>E-mail</Label>
@@ -54,19 +114,19 @@ const Form = ({ onEdit }) => {
       </InputArea>
       <InputArea>
         <Label>Telefone</Label>
-        <Input name="fone" />
+        <Input name="phone" />
       </InputArea>
       <InputArea>
         <Label>Endereço</Label>
-        <Input name="endereco" />
+        <Input name="address" />
       </InputArea>
       <InputArea>
         <Label>Plano</Label>
-        <Input name="plano" />
+        <Input name="plan" />
       </InputArea>
       <InputArea>
         <Label>Objetivo</Label>
-        <Input name="objetivo" />
+        <Input name="goal" />
       </InputArea>
 
       <Button type="submit">SALVAR</Button>
