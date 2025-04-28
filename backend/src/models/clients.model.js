@@ -21,10 +21,14 @@ const updateClient = async (data, id) => {
   await connection.execute(query, [name, email, phone, address, plan, goal, id]);
 };
 
-
+const deleteClient = async (id) => {
+  const query = 'DELETE FROM clients WHERE `id` = ?';
+  await connection.execute(query, [id]);
+};
 
 module.exports = {
   findAll,
   addClient,
   updateClient,
+  deleteClient
 };

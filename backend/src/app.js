@@ -41,4 +41,12 @@ app.put('/:id', async (req, res) => {
   return res.status(200).json("Cliente atualizado com sucesso");
 });
 
+app.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  await clientsModel.deleteClient(id);
+
+  return res.status(200).json("Cliente excluido com sucesso")
+});
+
 module.exports = app;
