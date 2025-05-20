@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const { clientsModel } = require('./models');
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', async (_req, res) => {
   const clients = await clientsModel.findAll();
