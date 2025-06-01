@@ -2,7 +2,7 @@
 
 ## Bem vindos ao FitApp, cadastros online
 
-Esse é um app para cadastro de clientes para pequenas academias, nele é possível cadastrar, nome, email, telefone, endereço, plano e objetivo do cliente.
+Esse é um app para cadastro de clientes para pequenas academias, nele é possível cadastrar: nome, email, telefone, endereço, plano e objetivo do cliente.
 
 ## Como rodar a aplicação??
 
